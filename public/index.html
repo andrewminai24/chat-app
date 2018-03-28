@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Chat app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
@@ -13,20 +14,45 @@
   <body>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./client.js"></script>
-      <form id="formJoin">
-        <div class="row">
-          <div class="col-md-5">
-            <input type="name" class="form-control" placeholder="Nickname:" id="input-name"/>
+    <div class="row">
+      <div class="col-md-3 jumbotron">
+        <h3 class="text-center">Active Users</h3>
+        <ul class="list-group" id="active-users"></ul>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-6">
+        <form id="formJoin" class="form-group">
+          <div class="whitespace"></div>
+          <div class="col-md-6">
+            <input type="text" class="form-control input-lg" placeholder="Nickname:" id="input-name"/>
           </div>
-          <div class="col-md-2">
-            <button type="submit" class="btn btn-primary" id="submit">
-              Join Chat
-              <i class="fa fa-comment"></i>
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-primary btn-block" id="submit">
+              Join Chat <i class="fa fa-comment"></i>
             </button>
           </div>
+        </form>
+        <div id="chat" class="jumbotron">
+          <h3 class="text-center">Messages</h3>
+          <ul class="list-group" id="messages">
+            <li class="list-group-item">
+              <span class="name">Mike:</span> Hello, World
+            </li>
+          </ul>
         </div>
-      </form>
-      <h3>Active Users</h3>
-      <ul class="list-group" id="active-users"></ul>
+        <form id="submitMessage" class="form-group">
+          <div class="row">
+            <div class="col-md-7">
+              <input type="text" class="form-control input-lg" placeholder="Message:" id="input-message"/>
+            </div>
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-primary btn-block" id="submit">
+                Send <i class="fa fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

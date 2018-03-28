@@ -2,7 +2,7 @@ var express  = require('express');
 var app = express();
 var server = require('http').Server(app).listen(3000);
 var io = require('socket.io')(server);
-var users = [];
+var users = ["None"];
 var name = "";
 
 app.use(express.static(__dirname));
@@ -16,9 +16,18 @@ io.on('connection', function(socket) {
    socket.emit('displayUsers', {total : users.length, all_users : users});
 
    socket.on('newUser', function(data) {
-     users.push(data);
-     name = data;
-     io.sockets.emit('appendUser', data);
+     if(users[0] === "None")
+     {
+       users.splice(0, 1);
+       users.push(data);
+       io.sockets.emit('updateUsers', users);
+     }
+     else
+     {
+       users.push(data);
+       name = data;
+       io.sockets.emit('appendUser', data);
+    }
    });
 
   socket.on('disconnect', function() {

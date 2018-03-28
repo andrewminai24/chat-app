@@ -1,7 +1,5 @@
 #!/bin/sh
 
-echo "Enter the commit message"
-read commitMessage
 git add -f *
-git commit -m $commitMessage
+git commit -m "Automated committing from a shell script"
 git push origin master
