@@ -18,12 +18,18 @@ $(function() {
 
   socket.on('displayUsers', function(data) {
     var size = data.total;
-    for (var key in data.all_users)
+    for(var key in data.all_users)
       addUser(data.all_users[key]);
   });
 
   socket.on('appendUser', function(data) {
     addUser(data);
+  });
+
+  socket.on('updateUsers', function(data) {
+    $('#active-users').empty();
+    for(var key in data)
+      addUser(data[key]);
   });
 
 });

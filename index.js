@@ -3,6 +3,7 @@ var app = express();
 var server = require('http').Server(app).listen(3000);
 var io = require('socket.io')(server);
 var users = [];
+var name = "";
 
 app.use(express.static(__dirname));
 app.use(express.static(require('path').join(__dirname, 'public')));
@@ -15,13 +16,15 @@ io.on('connection', function(socket) {
    socket.emit('displayUsers', {total : users.length, all_users : users});
 
    socket.on('newUser', function(data) {
-     console.log("Hello, " + data);
      users.push(data);
+     name = data;
      io.sockets.emit('appendUser', data);
    });
 
   socket.on('disconnect', function() {
-    //users.remove()
+    var index = users.indexOf(name);
+    if (index !== -1) users.splice(index, 1);
+    io.sockets.emit('updateUsers', users);
     console.log('disconnected');
   });
 });
