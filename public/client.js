@@ -2,12 +2,16 @@ var socket = io.connect();
 var name = "";
 
 $(function() {
+  $('#chat').hide();
   $('#formJoin').submit(function(e) {
     e.preventDefault();
     if($('#input-name').val() != "")
     {
       name = $('#input-name').val();
       socket.emit('newUser', name);
+      $('#formJoin').hide();
+      $('#empty').addClass('jumbotron');
+      $('#chat').show();
     }
   });
 
@@ -32,4 +36,15 @@ $(function() {
       addUser(data[key]);
   });
 
+  $('#submitMessage').submit(function(e) {
+    e.preventDefault();
+    var userInput = $('#input-message').val();
+    socket.emit('newMessage', {username: name, message: userInput});
+    $('#input-message').val('');
+  });
+
+  socket.on('appendMessage', function(data) {
+    $('#messages').append('<li class="list-group-item"><span class="name">'
+                           + data.username + ': </span>' + data.message + '</li>');
+  });
 });
