@@ -39,7 +39,8 @@ $(function() {
   $('#submitMessage').submit(function(e) {
     e.preventDefault();
     var userInput = $('#input-message').val();
-    socket.emit('newMessage', {username: name, message: userInput});
+    if(userInput)
+      socket.emit('newMessage', {username: name, message: userInput});
     $('#input-message').val('');
   });
 
